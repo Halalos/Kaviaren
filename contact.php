@@ -21,6 +21,19 @@
    }
 ?>
 
+<!-- Google Map CSS -->
+<style> 
+  iframe { 
+    margin: auto;
+    display: block;
+    width: 100%;
+    height: 400px;
+  }
+  .tm-contact-form {
+        margin-top: 60px;
+    }
+</style>
+
 <div class="container tm-position-relative">
     <!-- Existing HTML content -->
     <form action="contact.php" method="POST" class="tm-contact-form">
@@ -42,48 +55,13 @@
             </div>               
         </div>
         <div class="col-lg-6 col-md-6">
-            <div id="google-map"></div>
+            <!-- Google Map Iframe -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2653.6887034971555!2d18.081702994327806!3d48.30883822077357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476b3f2367d7c97f%3A0x4427b400b1e600b7!2sCaff%C3%A9%20Trieste%20Nitra!5e0!3m2!1shu!2ssk!4v1746530179610!5m2!1shu!2ssk" 
+                style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div> 
     </form>
 </div>
-
-<script>
-    var map = '';
-    var center;
-
-    function initialize() {
-        var mapOptions = {
-            zoom: 16,
-            center: new google.maps.LatLng(13.758468, 100.567481),
-            scrollwheel: false
-        };
-        
-        map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
-
-        google.maps.event.addDomListener(map, 'idle', function() {
-            calculateCenter();
-        });
-        
-        google.maps.event.addDomListener(window, 'resize', function() {
-            map.setCenter(center);
-        });
-    }
-
-    function calculateCenter() {
-        center = map.getCenter();
-    }
-
-    function loadGoogleMap() {
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize';
-        document.body.appendChild(script);
-    }
-
-    $(document).ready(function() {                
-        loadGoogleMap();                
-    });
-</script>
 
 <?php
     include("partials/footer.php");
