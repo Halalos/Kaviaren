@@ -1,6 +1,11 @@
 <?php
 require("_inc/function.php");
+require_once('_inc/autoload.php');
 add_stylesheets();
+session_start();
+$db = new Database();
+$auth = new Authenticate($db);
+//print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,20 +33,28 @@ add_stylesheets();
           </div>
 
           <div class="mobile-menu-icon">
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-bars"></i>  
           </div>
 
           <nav class="tm-nav">
             <ul>
-              <?php 
-              $pages = array(
-                'Home' => 'index.php',
-                'Today Special' => 'today-special.php',
-                'Menu' => 'menu.php',
-                'Contact' => 'contact.php'
-              );
-              echo get_menu($pages);
-              ?>
+            <?php
+            $menu = new Menu();
+            $menuItems = $menu->index();
+            foreach ($menuItems as $item) {
+              echo '<li><a href="' . $item['link'] . '">' . $item['label'] . '</a></li>';
+            }
+          ?>
+          <?php if ($auth->isLoggedIn()): ?>
+  <?php
+    $userRole = $auth->getUserRole();
+    $adminLabel = ($userRole == 0) ? 'Admin' : 'User';
+  ?>
+  <li><a href="admin.php"><?= $adminLabel ?></a></li>
+  <li><a href="logout.php">Odhlásiť sa</a></li>
+<?php else: ?>
+  <li><a href="login.php">Prihlásiť sa</a></li>
+<?php endif; ?>
             </ul>
           </nav>   
 
@@ -50,12 +63,3 @@ add_stylesheets();
     </div>
   </div>
 
-  <?php
-    $db = new Database();
-    $connection = $db->getConnection();
-    // if($connection){
-    //   echo "Mame spojenie";
-    // }
-  ?>
-</body>
-</html>
