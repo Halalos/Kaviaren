@@ -10,7 +10,6 @@ class Contact{
         $stmt = $this->db->prepare("SELECT * FROM contact");
         $stmt->execute();
         //FETCH_ASSOC - dostanem data z db ako pole
-        //FETCH_OBJ - dostanem data z db ako objekty
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function destroy($id){
