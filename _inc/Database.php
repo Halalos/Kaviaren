@@ -1,7 +1,7 @@
 <?php
     class Database{
         private $host = 'localhost';
-        private $db_name = 'blog_db';
+        private $db= 'kaviaren';
         private $user = 'root';
         private $pass = '';
         private $charset = 'utf8';
@@ -9,13 +9,14 @@
         
 
         public function __construct(){
-        $dsn = "mysql:host={$this->host};dbname={$this->db_name};charset={$this->charset}";
+        $dsn = "mysql:host={$this->host};dbname={$this->db};charset={$this->charset}";
         try{
             $this->pdo = new PDO($dsn, $this->user, $this->pass);
             //PDO: EERMODE_EXCEPTION - chyba sa vyhodi do vynimky 
             //PDO: EERMODE_WARNING - vyhodi velky warning
             //PDO: EERMODE_SILENT - nevypisu chybu
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         }
     
         catch(PDOException $e){
